@@ -5,12 +5,12 @@
 Summary:	Panorama Tools library
 Summary(pl.UTF-8):	Panorama Tools - biblioteka do obróbki panoram
 Name:		libpano13
-Version:	2.9.12
+Version:	2.9.14
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/panotools/%{name}-%{version}.tar.gz
-# Source0-md5:	3ca4f7bfe5a7b0acd86901d502dee8ca
+# Source0-md5:	fb011aead63974e630739ed55d75a4b0
 URL:		http://panotools.sourceforge.net/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -97,7 +97,19 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/PTtiffdump
 %attr(755,root,root) %{_bindir}/PTuncrop
 %attr(755,root,root) %{_bindir}/panoinfo
-%attr(755,root,root) %{_libdir}/libpano13.so.*.*.*
+%attr(755,root,root) %{_libdir}/libpano13.so.*
+%{_mandir}/man1/panoinfo.1.*
+%{_mandir}/man1/PTAInterpolate.1.*
+%{_mandir}/man1/PTblender.1.*
+%{_mandir}/man1/PTcrop.1.*
+%{_mandir}/man1/PTinfo.1.*
+%{_mandir}/man1/PTmasker.1.*
+%{_mandir}/man1/PTmender.1.*
+%{_mandir}/man1/PToptimizer.1.*
+%{_mandir}/man1/PTroller.1.*
+%{_mandir}/man1/PTtiff2psd.1.*
+%{_mandir}/man1/PTtiffdump.1.*
+%{_mandir}/man1/PTuncrop.1.*
 
 %files devel
 %defattr(644,root,root,755)
