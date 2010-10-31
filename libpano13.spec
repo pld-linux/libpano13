@@ -7,9 +7,9 @@ Summary(pl.UTF-8):	Panorama Tools - biblioteka do obróbki panoram
 Name:		libpano13
 Version:	2.9.17
 Release:	1
-License:	GPL
+License:	GPL v2+
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/panotools/%{name}-%{version}.tar.gz
+Source0:	http://downloads.sourceforge.net/panotools/%{name}-%{version}.tar.gz
 # Source0-md5:	54ec7c505cf38521f2fbb6e2acd2c433
 URL:		http://panotools.sourceforge.net/
 BuildRequires:	autoconf >= 2.50
@@ -97,7 +97,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/PTtiffdump
 %attr(755,root,root) %{_bindir}/PTuncrop
 %attr(755,root,root) %{_bindir}/panoinfo
-%attr(755,root,root) %{_libdir}/libpano13.so.*
+%attr(755,root,root) %{_libdir}/libpano13.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libpano13.so.2
 %{_mandir}/man1/panoinfo.1.*
 %{_mandir}/man1/PTAInterpolate.1.*
 %{_mandir}/man1/PTblender.1.*
