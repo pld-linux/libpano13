@@ -66,6 +66,7 @@ Statyczna biblioteka Panorama Tools.
 %{__autoheader}
 %{__automake}
 %configure \
+	LIBS="-lm" \
 	--enable-static \
 	%{?with_java:--with-java=/usr/%{_lib}/java}%{!?with_java:--without-java}
 
