@@ -1,16 +1,17 @@
 #
 # Conditional build:
-%bcond_with	java	# build with Java Native Interface
+%bcond_with	java		# Java Native Interface
+%bcond_without	static_libs	# static library build
 #
 Summary:	Panorama Tools library
 Summary(pl.UTF-8):	Panorama Tools - biblioteka do obróbki panoram
 Name:		libpano13
-Version:	2.9.18
-Release:	2
+Version:	2.9.19
+Release:	1
 License:	GPL v2+
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/panotools/%{name}-%{version}.tar.gz
-# Source0-md5:	9c3a4fce8b6f1d79e395896ce5d8776e
+# Source0-md5:	1e4ce42f58a3f22c0a97d0b7a8e1dbb0
 URL:		http://panotools.sourceforge.net/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -19,6 +20,7 @@ BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool
+BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -66,9 +68,9 @@ Statyczna biblioteka Panorama Tools.
 %{__autoheader}
 %{__automake}
 %configure \
-	LIBS="-lm" \
-	--enable-static \
+	%{?with_static_libs:--enable-static} \
 	%{?with_java:--with-java=/usr/%{_lib}/java}%{!?with_java:--without-java}
+#	LIBS="-lm" \
 
 %{__make}
 
@@ -77,6 +79,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libpano13.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -87,6 +92,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README README.linux doc/*.txt
+%attr(755,root,root) %{_bindir}/PTAInterpolate
 %attr(755,root,root) %{_bindir}/PTblender
 %attr(755,root,root) %{_bindir}/PTcrop
 %attr(755,root,root) %{_bindir}/PTinfo
@@ -99,27 +105,28 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/PTuncrop
 %attr(755,root,root) %{_bindir}/panoinfo
 %attr(755,root,root) %{_libdir}/libpano13.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libpano13.so.2
-%{_mandir}/man1/panoinfo.1.*
-%{_mandir}/man1/PTAInterpolate.1.*
-%{_mandir}/man1/PTblender.1.*
-%{_mandir}/man1/PTcrop.1.*
-%{_mandir}/man1/PTinfo.1.*
-%{_mandir}/man1/PTmasker.1.*
-%{_mandir}/man1/PTmender.1.*
-%{_mandir}/man1/PToptimizer.1.*
-%{_mandir}/man1/PTroller.1.*
-%{_mandir}/man1/PTtiff2psd.1.*
-%{_mandir}/man1/PTtiffdump.1.*
-%{_mandir}/man1/PTuncrop.1.*
+%attr(755,root,root) %ghost %{_libdir}/libpano13.so.3
+%{_mandir}/man1/PTAInterpolate.1*
+%{_mandir}/man1/PTblender.1*
+%{_mandir}/man1/PTcrop.1*
+%{_mandir}/man1/PTinfo.1*
+%{_mandir}/man1/PTmasker.1*
+%{_mandir}/man1/PTmender.1*
+%{_mandir}/man1/PToptimizer.1*
+%{_mandir}/man1/PTroller.1*
+%{_mandir}/man1/PTtiff2psd.1*
+%{_mandir}/man1/PTtiffdump.1*
+%{_mandir}/man1/PTuncrop.1*
+%{_mandir}/man1/panoinfo.1*
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libpano13.so
-%{_libdir}/libpano13.la
 %{_includedir}/pano13
 %{_pkgconfigdir}/libpano13.pc
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libpano13.a
+%endif
