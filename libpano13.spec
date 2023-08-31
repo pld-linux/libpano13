@@ -1,18 +1,18 @@
 #
 # Conditional build:
 %bcond_without	java		# Java Native Interface
-%bcond_without	static_libs	# static library build
+%bcond_without	static_libs	# static library
 #
 Summary:	Panorama Tools library
 Summary(pl.UTF-8):	Panorama Tools - biblioteka do obróbki panoram
 Name:		libpano13
-Version:	2.9.19
-Release:	3
+Version:	2.9.20
+Release:	1
 License:	GPL v2+
 Group:		Libraries
-Source0:	http://downloads.sourceforge.net/panotools/%{name}-%{version}.tar.gz
-# Source0-md5:	1e4ce42f58a3f22c0a97d0b7a8e1dbb0
-URL:		http://panotools.sourceforge.net/
+Source0:	https://downloads.sourceforge.net/panotools/%{name}-%{version}.tar.gz
+# Source0-md5:	c32b71de5fbbedd357fc37e61e45b9d4
+URL:		https://panotools.sourceforge.net/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 %{?with_java:BuildRequires:	jdk}
@@ -39,6 +39,7 @@ Requires:	%{name} = %{version}-%{release}
 Requires:	libjpeg-devel >= 6b
 Requires:	libpng-devel
 Requires:	libtiff-devel
+Requires:	zlib-devel
 
 %description devel
 Header files for Panorama Tools library.
@@ -70,7 +71,6 @@ Statyczna biblioteka Panorama Tools.
 %configure \
 	%{?with_static_libs:--enable-static} \
 	%{?with_java:--with-java="%{java_home}"}%{!?with_java:--without-java}
-#	LIBS="-lm" \
 
 %{__make}
 
