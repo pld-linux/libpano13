@@ -6,20 +6,19 @@
 Summary:	Panorama Tools library
 Summary(pl.UTF-8):	Panorama Tools - biblioteka do obróbki panoram
 Name:		libpano13
-Version:	2.9.20
+Version:	2.9.21
 Release:	1
 License:	GPL v2+
 Group:		Libraries
 Source0:	https://downloads.sourceforge.net/panotools/%{name}-%{version}.tar.gz
-# Source0-md5:	c32b71de5fbbedd357fc37e61e45b9d4
+# Source0-md5:	e64f83e936a0e3319873d4d2c88e7209
 URL:		https://panotools.sourceforge.net/
-BuildRequires:	autoconf >= 2.50
-BuildRequires:	automake
+BuildRequires:	cmake >= 3.0
 %{?with_java:BuildRequires:	jdk}
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
-BuildRequires:	libtool
+BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -63,25 +62,21 @@ Statyczna biblioteka Panorama Tools.
 %setup -q
 
 %build
-%{__libtoolize}
-%{__aclocal} -I m4
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-%configure \
-	%{?with_static_libs:--enable-static} \
-	%{?with_java:--with-java="%{java_home}"}%{!?with_java:--without-java}
+install -d build
+cd build
+%cmake .. \
+	%{?with_java:-DSUPPORT_JAVA_PROGRAMS=ON}
 
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-# obsoleted by pkg-config
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/libpano13.la
+# packaged as %doc
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/pano13/doc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -91,7 +86,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README README.linux doc/*.txt
+%doc AUTHORS ChangeLog.hg NEWS README TODO.org doc/{*.readme,*.txt}
 %attr(755,root,root) %{_bindir}/PTAInterpolate
 %attr(755,root,root) %{_bindir}/PTblender
 %attr(755,root,root) %{_bindir}/PTcrop
