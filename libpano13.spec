@@ -6,12 +6,12 @@
 Summary:	Panorama Tools library
 Summary(pl.UTF-8):	Panorama Tools - biblioteka do obróbki panoram
 Name:		libpano13
-Version:	2.9.21
+Version:	2.9.22
 Release:	1
 License:	GPL v2+
 Group:		Libraries
 Source0:	https://downloads.sourceforge.net/panotools/%{name}-%{version}.tar.gz
-# Source0-md5:	e64f83e936a0e3319873d4d2c88e7209
+# Source0-md5:	303da79ebe5138aee57b0070e850898d
 URL:		https://panotools.sourceforge.net/
 BuildRequires:	cmake >= 3.0
 %{?with_java:BuildRequires:	jdk}
@@ -87,7 +87,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog.hg NEWS README TODO.org doc/{*.readme,*.txt}
-%attr(755,root,root) %{_bindir}/PTAInterpolate
 %attr(755,root,root) %{_bindir}/PTblender
 %attr(755,root,root) %{_bindir}/PTcrop
 %attr(755,root,root) %{_bindir}/PTinfo
