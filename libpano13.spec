@@ -7,7 +7,7 @@ Summary:	Panorama Tools library
 Summary(pl.UTF-8):	Panorama Tools - biblioteka do obróbki panoram
 Name:		libpano13
 Version:	2.9.22
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Libraries
 Source0:	https://downloads.sourceforge.net/panotools/%{name}-%{version}.tar.gz
@@ -18,6 +18,7 @@ BuildRequires:	cmake >= 3.0
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
+BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -99,8 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/PTuncrop
 %attr(755,root,root) %{_bindir}/panoinfo
 %attr(755,root,root) %{_libdir}/libpano13.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libpano13.so.3
-%{_mandir}/man1/PTAInterpolate.1*
+%ghost %{_libdir}/libpano13.so.3
 %{_mandir}/man1/PTblender.1*
 %{_mandir}/man1/PTcrop.1*
 %{_mandir}/man1/PTinfo.1*
@@ -112,10 +112,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/PTtiffdump.1*
 %{_mandir}/man1/PTuncrop.1*
 %{_mandir}/man1/panoinfo.1*
+%if %{with java}
+%attr(755,root,root) %{_bindir}/PTAInterpolate
+%{_mandir}/man1/PTAInterpolate.1*
+%endif
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libpano13.so
+%{_libdir}/libpano13.so
 %{_includedir}/pano13
 %{_pkgconfigdir}/libpano13.pc
 
