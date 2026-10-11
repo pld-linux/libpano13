@@ -3,23 +3,26 @@
 %bcond_without	java		# Java Native Interface
 %bcond_without	static_libs	# static library
 #
+%{?use_default_jdk}
 Summary:	Panorama Tools library
 Summary(pl.UTF-8):	Panorama Tools - biblioteka do obróbki panoram
 Name:		libpano13
 Version:	2.9.23
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Libraries
 Source0:	https://downloads.sourceforge.net/panotools/%{name}-%{version}.tar.gz
 # Source0-md5:	26453050489405a0820fbf6c889601ec
 URL:		https://panotools.sourceforge.net/
 BuildRequires:	cmake >= 3.12
-%{?with_java:BuildRequires:	jdk}
+%if %{with java}
+%{?buildrequires_jdk}
+%endif
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.605
+BuildRequires:	rpmbuild(macros) >= 1.745
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
